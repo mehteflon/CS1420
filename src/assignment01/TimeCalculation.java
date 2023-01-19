@@ -7,6 +7,8 @@
 
 package assignment01;
 
+import java.util.Scanner;
+
 public class TimeCalculation {
     public static void main(String[] args)
     {
