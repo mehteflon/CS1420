@@ -15,10 +15,12 @@ public class TimeCalculation {
         int minutes = (uID%3600)/60; // Uses modulus operator to get remainder from previous calculation, divides it by 60  to get number of minutes
         int seconds = (uID%3600)%60; // Uses modulus operator to get remainder from previous calculation, which is the # of seconds
 
-        System.out.print("My uID number is u");
+        System.out.print("My uID number idds u");
         System.out.print(uID);
         System.out.println("."); // This and previous two lines print my uID.
         System.out.print(uID + " seconds is " + hours + " hour(s), " + minutes + " minute(s), and " + seconds + " second(s)."); // Prints hours/minutes/seconds of uID.
 
+
+        System.out.println("TESTING");
     }
 }
