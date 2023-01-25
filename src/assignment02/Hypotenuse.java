@@ -6,7 +6,7 @@
 
 package assignment02;
 
-import java.util.Scanner;
+import java.util.Scanner; // Imports scanner class
 
 public class Hypotenuse {
     public static void main(String[] args)
@@ -22,7 +22,7 @@ public class Hypotenuse {
         side2 = input.nextDouble();
 
         hypotenuse = Math.sqrt((side1*side1) + (side2*side2)); // Calculates the hypotenuse
-        System.out.print("The hypotenuse of this triangle is: " + hypotenuse);
+        System.out.print("The hypotenuse of this triangle is: " + hypotenuse); // Print's result of calculation
 
     }
 }

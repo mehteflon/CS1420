@@ -6,7 +6,7 @@
 
 package assignment02;
 
-import java.util.Scanner;
+import java.util.Scanner; // Imports scanner class
 
 public class CircleArea {
     public static void main(String[] args)
@@ -19,6 +19,6 @@ public class CircleArea {
         radius = input.nextDouble(); // Set's radius variable equal to whatever number the user inputs
 
         area = Math.PI*(radius*radius); // Calculates area of given circle
-        System.out.print("The area of a circle with radius " + radius + " is " + area + ".");
+        System.out.print("The area of a circle with radius " + radius + " is " + area + "."); // Prints result of calculation
     }
 }
