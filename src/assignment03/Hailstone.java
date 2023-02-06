@@ -16,7 +16,7 @@ public class Hailstone {
         {
             System.out.print("Enter a number: ");
             n = input.nextInt();
-            if (n >= 0)
+            if (n > 0)
                 positive++; // If they enter a positive number, change positive variable to 1 so the loop terminates.
         }
 

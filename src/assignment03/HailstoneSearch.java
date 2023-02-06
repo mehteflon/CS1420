@@ -1,17 +1,22 @@
+/*
+Will Graham u0982574
+This is the hailstone.java program but adjusted to solve for n given a length of steps X.
+*/
+
 package assignment03;
 import java.util.Scanner;
 
 public class HailstoneSearch {
     public static void main(String[] args) {
-        int steps = 0; // Declares variable that will store user inputted number of steps
+        int X = 0; // Declares variable that will store user inputted number of steps
         int positive = 0; // Variable will store either 1 or 0 to indicate to the program whether the user input is positive or negative. Needs to be positive.
         Scanner input = new Scanner(System.in); // Creates scanner for user input
 
         while (positive == 0) // This will keep looping until the user inputs a positive integer
         {
             System.out.print("Enter the number of steps: ");
-            steps = input.nextInt();
-            if (steps >= 0)
+            X = input.nextInt();
+            if (X >= 0)
                 positive++; // If they enter a positive number, change positive variable to 1 so the loop terminates.
         }
 
@@ -28,11 +33,10 @@ public class HailstoneSearch {
                 }
             }
 
-            if (currentSteps == steps) {
-                System.out.println("The starting number n is: " + n);
+            if (currentSteps == X) {
+                System.out.println("The Hailstone sequence starting at " + n + " takes " + X + " steps to converge to 1.");
                 return;
             }
         }
-        System.out.println("There is no number in the range [2,2000] that produces that number of steps.");
     }
 }
