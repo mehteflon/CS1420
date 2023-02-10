@@ -12,7 +12,9 @@
 package assignment05;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -41,9 +43,9 @@ public class WordleClone
 		System.out.println("  Correct but misplaced letters are lowercase.");
 		
 		// Choose the winning, secret word from a text file of words.
-		
+
 		String secretWord;
-		secretWord = pickRandomWord("five.txt");  /* TODO:  Write this function below. */
+		secretWord = pickRandomWord("/Users/willgraham/IdeaProjects/CS 1420 - Spring 2023/src/assignment05/five.txt");  /* TODO:  Write this function below. */
 		
 		// For debugging you can uncomment and change the next line 
 		//   to force the answer to be something you can predict.
@@ -100,8 +102,6 @@ public class WordleClone
 		console.close();
 	}
 
-	private static String pickRandomWord(String s) {
-	}
 
 	/**
 	 * Given a filename, this method returns a count of the number of
@@ -111,8 +111,26 @@ public class WordleClone
 	 * @return the count of words in the file
 	 */
 	public static int countWords (String filename)
-	{		
-		/* TODO:  Complete this function. (OK to copy code from lab.) */
+	{
+		int wordCount = 0;
+
+		try
+		{
+			Scanner input = new Scanner(new File(filename));
+
+			while (input.hasNextLine())
+			{
+				String line = input.nextLine();
+				String[] words = line.split(" ");
+				wordCount += words.length;
+			}
+			input.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.println("File not found: " + filename);
+		}
+		return wordCount;
 	}
 	
 	/* TODO: Write the contract, function header, and function that picks a random
@@ -120,6 +138,30 @@ public class WordleClone
 	 * to countWords above for that step.  Look in 'main' to figure out
 	 * the function name, parameters, and return type.  This function is static.
 	 */
+
+	public static String pickRandomWord (String filename)
+	{
+		int length = countWords(filename);
+		Random random = new Random();
+		int secretWordNumber = random.nextInt(length + 1);
+
+		String[] wordArray = new String[length]; // Create a string array of size of the length of the word list
+
+		File file = new File(filename);
+		Scanner input = new Scanner(file);
+
+		int i = 0;
+
+		while (input.hasNextLine())
+		{
+			wordArray[i] = input.nextLine();
+			i++;
+		}
+
+		String secretWord = wordArray[secretWordNumber - 1];
+
+		return secretWord;
+	}
 	
 	/**
 	 * Given a word and a filename, this method determines if the word
