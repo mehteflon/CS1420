@@ -27,7 +27,6 @@ public class MyDrawingPanel extends JPanel implements Runnable // "extends jpane
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setContentPane(this);
-        //frame.setContentPane(new JButton("Don't press me!"));
 
         frame.pack(); // recalculates the size
         frame.setVisible(true);
@@ -50,6 +49,7 @@ public class MyDrawingPanel extends JPanel implements Runnable // "extends jpane
             y2 = (int) (Math.random() * 800);
             x3 = (int) (Math.random() * 800);
             y3 = (int) (Math.random() * 800);
+
 
             g.setColor(new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256))); // generates random color within the rgb set (0-255)
             g.drawPolygon(new int[] {x1, x2, x3}, new int[] {y1, y2, y3}, 3); // Draws the triangles, {x1, x2, x3} is the array of x coordinates for the verticies and vice versa for {y1, y2, y3}

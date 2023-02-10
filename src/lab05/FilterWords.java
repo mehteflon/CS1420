@@ -1,3 +1,7 @@
+/*
+Will Graham u0982574
+ */
+
 package lab05;
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +12,7 @@ public class FilterWords {
     public static void main (String[] args)
     {
         try (Scanner in = new Scanner(new File("C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\lab05\\words.txt"));
-            PrintWriter out = new PrintWriter("C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\lab05\\fives.txt");)
+            PrintWriter out = new PrintWriter("C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\lab05\\five.txt");)
         {
             while (in.hasNext())
             {
