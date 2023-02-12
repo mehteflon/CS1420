@@ -16,7 +16,7 @@ public class FilterWords {
                 word = in.next();
                 System.out.println(word);
 
-                if (word.length() < 6)
+                if (word.length() == 5)
                     out.write(word + "\n");
 
             }

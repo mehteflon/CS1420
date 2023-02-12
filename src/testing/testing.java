@@ -3,13 +3,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.IOException;
 
 
 public class testing {
     public static void main (String[] args)
     {
-        String secretWord;
-        secretWord = pickRandomWord("/Users/willgraham/IdeaProjects/CS 1420 - Spring 2023/src/testing/five.txt");
+        File filename = new File("C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\testing\\five.txt");
+
+        try {
+            String secretWord;
+            secretWord = pickRandomWord("C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\testing\\five.txt");
+            System.out.println(secretWord);
+        } catch (FileNotFoundException e)
+        {
+            System.out.println("File not found: " + filename);
+        }
 
     }
 
@@ -36,26 +45,25 @@ public class testing {
         return wordCount;
     }
 
-    public static String pickRandomWord (String filename)
+    public static String pickRandomWord (String filename) throws FileNotFoundException
     {
         int length = countWords(filename);
         Random random = new Random();
-        int secretWordNumber = random.nextInt(length + 1);
+        int secretWordNumber = random.nextInt(length);
 
-        String[] wordArray = new String[length]; // Create a string array of size of the length of the word list
+        String[] wordArray = new String[length]; // Creates string array of size of list of words
 
         File file = new File(filename);
         Scanner input = new Scanner(file);
 
         int i = 0;
 
-        while (input.hasNextLine())
-        {
+        while (input.hasNextLine()) {
             wordArray[i] = input.nextLine();
             i++;
         }
 
-        String secretWord = wordArray[secretWordNumber - 1];
+        String secretWord = wordArray[secretWordNumber];
 
         return secretWord;
     }

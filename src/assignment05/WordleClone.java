@@ -43,17 +43,26 @@ public class WordleClone
 		System.out.println("  Correct but misplaced letters are lowercase.");
 		
 		// Choose the winning, secret word from a text file of words.
+		String filePath = "C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\assignment05\\five.txt";
+		File filename = new File(filePath);
 
-		String secretWord;
-		secretWord = pickRandomWord("/Users/willgraham/IdeaProjects/CS 1420 - Spring 2023/src/assignment05/five.txt");  /* TODO:  Write this function below. */
-		
+		String secretWord = null; // Initializes variable that stores the winning word
+
+		try
+		{
+			secretWord = pickRandomWord(filePath);
+			System.out.println(secretWord);
+		} catch (FileNotFoundException e)
+		{
+			System.out.println("File not found: " + filename);
+		}
+
+
+
 		// For debugging you can uncomment and change the next line 
 		//   to force the answer to be something you can predict.
 		// You may also want to uncomment the line that shows the
 		//   answer (for testing).
-		
-		//secretWord = "shine";
-		//System.out.println(secretWord);
 		
 		// Loop, allow the user to make guesses.
 		
@@ -63,7 +72,7 @@ public class WordleClone
 		{
 			// Give prompt, input a guess.  For input robustness, take the first word
 			//   on each line.  (Input a line, then scan the first word from that line.)
-			
+
 			System.out.print("Enter guess #" + guessCount + ": ");
 			String line = console.nextLine();
 			if (line.trim().length() == 0)  // Skip blank lines (remove whitespace from ends, check length)
@@ -74,9 +83,17 @@ public class WordleClone
 			
 			// Validate the guess. (Check the word against the list of words.)
 			// If the guess is not a valid word, restart the loop.
+			if (isValidWord(guess, filePath) == false)
+			{
+				System.out.println("That is not a valid word. Please try again.");
+				continue;
+			}
+
 			
 			/* TODO: Write the logic that validates the user's guess.  (One simple 'if' statement and a few controlled statements.) */
-			
+
+
+
 			// They've made a guess, count it.
 			
 			guessCount++;
@@ -139,7 +156,7 @@ public class WordleClone
 	 * the function name, parameters, and return type.  This function is static.
 	 */
 
-	public static String pickRandomWord (String filename)
+	public static String pickRandomWord (String filename) throws FileNotFoundException
 	{
 		int length = countWords(filename);
 		Random random = new Random();
@@ -180,7 +197,21 @@ public class WordleClone
 	 */
 	public static boolean isValidWord (String word, String filename)
 	{
-		/* TODO: Complete this function */
+		try
+		{
+			Scanner input = new Scanner(new File(filename));
+			while (input.hasNextLine())
+			{
+				if (input.nextLine().trim().equals(word))
+				{
+					return true;
+				}
+			}
+			return false;
+		} catch (FileNotFoundException e) {
+			System.out.println("The file could not be found: " + e.getMessage());
+			return false;
+		}
 	}
 	
 	/**
@@ -206,7 +237,7 @@ public class WordleClone
 	 */
 	public static String replaceLetter(String s, int position, char letter)
 	{
-		/* TODO: Complete this function (OK to copy code from lab) */
+		return s.substring(0,position) + letter + s.substring(position+1);
 	}
 	
 	/**
@@ -250,6 +281,19 @@ public class WordleClone
 		// the replaceLetter helper function will be very useful here.
 		// Finally, Character.toUpperCase(someChar) returns an
 		// uppercase version of a character.
+		for (int i = 0; i < 5; i++) // Loops through each character of guess and answer and checks against each other, updates answer and score accordingly
+		{
+			char guessChar = guess.charAt(i);
+			char answerChar = answer.charAt(i);
+
+			if (guessChar == answerChar)
+			{
+				score = replaceLetter(score, i, Character.toUpperCase(guessChar));
+				answer = replaceLetter(answer, i, '-');
+			}
+		}
+
+
 		
 		/* TODO: Complete this scoring step. */
 		
@@ -268,7 +312,21 @@ public class WordleClone
 		// position.  (It doesn't matter which is the inner loop.)
 		// You'll also want to skip any positions that have a '-' in them.
 		// (Just 'continue' in that case.)
-		
+		for (int i = 0; i < 5; i++) // Loops through characters in the guess
+		{
+			char guessChar = guess.charAt(i);
+
+			for (int k = 0; k < 5; k++) // Loops through characters in answer and checks with each character of guess
+			{
+				char answerChar = answer.charAt(k);
+
+				if (answerChar != '-' && answerChar == guessChar)
+				{
+					score = replaceLetter(score, k, guessChar);
+				}
+			}
+		}
+
 		/* TODO: Complete this scoring step. */
 		
 		// Done with scoring.  Return the score string.
