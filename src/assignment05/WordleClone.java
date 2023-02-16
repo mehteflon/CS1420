@@ -1,14 +1,10 @@
 /**
- * This application plays a wordle-like game with the user.
- * A list of five letter words must exist in "five.txt" for this
- * application to run correctly.
- * 
- * Note that students will complete this application as part of
- * assignment #5.
- * 
- * @author Peter Jensen and ---your name here---
- * @version February 6, 2023
+ * @author Will Graham u0982574
+ * @version February 14, 2023
+ *
+ * This application is a clone of the New York Times' "Wordle"
  */
+
 package assignment05;
 
 import java.io.File;
@@ -22,18 +18,13 @@ import java.util.Scanner;
  */
 public class WordleClone
 {
-	/**
-	 * Application entry point
-	 * 
-	 * @param args unused
-	 */
 	public static void main(String[] args)
 	{
 		// Prepare the console scanner (note the variable name)
 		
 		Scanner console = new Scanner(System.in);
 		
-		// Print a nice welcome message.
+		// Below is welcome message + explanation of the game
 		
 		System.out.println("Welcome to my Wordle clone.");
 		System.out.println("You have six guesses to guess the secret word.");
@@ -43,26 +34,19 @@ public class WordleClone
 		System.out.println("  Correct but misplaced letters are lowercase.");
 		
 		// Choose the winning, secret word from a text file of words.
-		String filePath = "C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\assignment05\\five.txt";
-		File filename = new File(filePath);
+		String filename = "C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\assignment05\\five.txt";
+		File file = new File(filename);
 
 		String secretWord = null; // Initializes variable that stores the winning word
 
 		try
 		{
-			secretWord = pickRandomWord(filePath);
+			secretWord = pickRandomWord(filename);
 			System.out.println(secretWord);
 		} catch (FileNotFoundException e)
 		{
 			System.out.println("File not found: " + filename);
 		}
-
-
-
-		// For debugging you can uncomment and change the next line 
-		//   to force the answer to be something you can predict.
-		// You may also want to uncomment the line that shows the
-		//   answer (for testing).
 		
 		// Loop, allow the user to make guesses.
 		
@@ -83,39 +67,33 @@ public class WordleClone
 			
 			// Validate the guess. (Check the word against the list of words.)
 			// If the guess is not a valid word, restart the loop.
-			if (isValidWord(guess, filePath) == false)
+
+			if (isValidWord(guess, filename) == false) // Method checks to make sure inputted word is in five.txt
 			{
 				System.out.println("That is not a valid word. Please try again.");
 				continue;
 			}
 
+			guessCount++; // Counts each guess
 			
-			/* TODO: Write the logic that validates the user's guess.  (One simple 'if' statement and a few controlled statements.) */
 
-
-
-			// They've made a guess, count it.
-			
-			guessCount++;
-			
-			// Score it and display the results.
-			
-			String scoredGuess = scoreGuess(guess, secretWord); 
+			String scoredGuess = scoreGuess(guess, secretWord); // scoredGuess variable stores scored guess for later printing
 			System.out.println ("Guess: " + guess);
 			System.out.println ("Score: " + scoredGuess);
-			
-			// Check for a win.  If the scoredGuess is all uppercase and
-			//   matches the secret word, it's a win.  Display a message and
-			//   end the program.  
-			// Hint:  Use .toUpperCase() to make an uppercase copy of a string.
-			
-			/* TODO: Write the logic that checks for a win.  (A few statements total, including one 'if' statement.) */
+
+			String upperCaseAnswer = new String(guess.toUpperCase());
+
+			if (scoredGuess.equals(upperCaseAnswer)) // Checks to see if user has one
+			{
+				System.out.println("You won!");
+				break;
+			}
 		}
 
-		// If the guess loop ends, they've used all their guesses
-		//   (and not won).  Inform them of that.
-		
-		System.out.println("You lost.  The word was " + secretWord + ".");
+		if (guessCount == 7) // Checks to see if they've made all their guesses, if they have it means they haven't won since the above block of code would have run if that were the case
+		{
+			System.out.println("You lost.  The word was " + secretWord + ".");
+		}
 		console.close();
 	}
 
@@ -263,24 +241,8 @@ public class WordleClone
 	 */
 	public static String scoreGuess (String guess, String answer)
 	{
-		// The score (before we start) is a five character string of dashes.
-		// (Create a score variable, initialize it to five dashes.)
-		
 		String score = "-----";
-		
-		// Score the correct letters first.  If there is a match,
-		// put a capital letter in the score, then 'remove' the matching
-		// letter in the answer.  For example:
-		//    answer:                  abcde
-		//    guess:                   ecccc
-		//    adjust score like this:              --C--
-		//    remove matching letter from answer:  ab-de
-		//    remove matching letter from guess:   ec-cc
-		// This way, that letter cannot be matched again later.
-		// Notes:  We'll loop and do this for each position.  Also,
-		// the replaceLetter helper function will be very useful here.
-		// Finally, Character.toUpperCase(someChar) returns an
-		// uppercase version of a character.
+
 		for (int i = 0; i < 5; i++) // Loops through each character of guess and answer and checks against each other, updates answer and score accordingly
 		{
 			char guessChar = guess.charAt(i);
@@ -293,25 +255,6 @@ public class WordleClone
 			}
 		}
 
-
-		
-		/* TODO: Complete this scoring step. */
-		
-		// Next score misplaced letters.  If there is a match,
-		// put a capital letter in the score, then 'remove' the matching
-		// letter in the answer.  For example:
-		//    answer:                  ab-de
-		//    guess:                   ec-cc
-		//    adjust score like this:              e-C--
-		//    remove matching letter from answer:  ab-d-
-		//    remove matching letter from guess:   -c-cc
-		// Again, every time an answer letter matches, remove it by
-		// replacing it with a dash so that it won't match again.
-		// Notes:  You'll need a doubly-nested loop for this.  One loop
-		// loops on the answer position, the other loops on the guess
-		// position.  (It doesn't matter which is the inner loop.)
-		// You'll also want to skip any positions that have a '-' in them.
-		// (Just 'continue' in that case.)
 		for (int i = 0; i < 5; i++) // Loops through characters in the guess
 		{
 			char guessChar = guess.charAt(i);
@@ -322,15 +265,14 @@ public class WordleClone
 
 				if (answerChar != '-' && answerChar == guessChar)
 				{
-					score = replaceLetter(score, k, guessChar);
+					if (score.contains(String.valueOf(guessChar)) == false) // Checks to make sure we don't repeat any letters (char should only 
+					{
+						score = replaceLetter(score, i, guessChar);
+
+					}
 				}
 			}
 		}
-
-		/* TODO: Complete this scoring step. */
-		
-		// Done with scoring.  Return the score string.
-		
 		return score;
 	}
 
