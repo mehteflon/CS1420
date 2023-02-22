@@ -18,6 +18,16 @@ public class Fraction {
             remainder = gcd % remainder;
             gcd = temp;
         }
+
+        numerator = numerator/gcd; // reduces numerator
+        denominator = denominator/gcd; // reduces denominator
+
+        if (denominator < 0)
+        {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
+
     }
 
     public Fraction (long n)
@@ -55,7 +65,7 @@ public class Fraction {
     {
         Fraction result;
 
-        result = new Fraction(this.numerator / rightHandSide.numerator,this.denominator / rightHandSide.denominator);
+        result = new Fraction(this.numerator * rightHandSide.denominator,this.denominator * rightHandSide.numerator);
 
         return result;
     }
