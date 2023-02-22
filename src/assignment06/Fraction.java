@@ -1,13 +1,29 @@
 package assignment06;
 
 public class Fraction {
-    private int numerator;
-    private int denominator;
-    public Fraction (int n, int d)
-    {
 
+    // Below are instance variables to be used later in the class
+    private long numerator;
+    private long denominator;
+    public Fraction (long n, long d)
+    {
         numerator = n;
         denominator = d;
+
+        long gcd = numerator;
+        long remainder = denominator;
+
+        while (remainder != 0) {
+            long temp = remainder;
+            remainder = gcd % remainder;
+            gcd = temp;
+        }
+    }
+
+    public Fraction (long n)
+    {
+        numerator = n;
+        denominator = 1;
     }
 
     public String toString()
@@ -15,12 +31,12 @@ public class Fraction {
         return this.numerator + "/" + this.denominator;
     }
 
-    public int getNumerator ()
+    public long getNumerator ()
     {
         return numerator;
     }
 
-    public int getDenominator ()
+    public long getDenominator ()
     {
         return denominator;
     }
@@ -39,7 +55,7 @@ public class Fraction {
     {
         Fraction result;
 
-        result = new Fraction(this.numerator / rightHandSide.numerator, this.denominator / rightHandSide.denominator);
+        result = new Fraction(this.numerator / rightHandSide.numerator,this.denominator / rightHandSide.denominator);
 
         return result;
     }
