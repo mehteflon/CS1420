@@ -1,3 +1,10 @@
+/*
+Will Graham u0982574
+
+This is the FractionTester class that tests the fraction constructor and the fraction class methods.
+*/
+
+
 package assignment06;
 
 public class FractionTester {
@@ -77,6 +84,26 @@ public class FractionTester {
             System.out.println("Error: fraction not being reduced properly.");
             errors++;
         }
+
+        // Tests toDouble method
+        System.out.println("Testing toDouble method: " + test4.toDouble());
+        if (test4.toDouble() != 0.5)
+        {
+            System.out.println("Error: toDouble method not converting fraction to double correctly.");
+            errors++;
+        }
+
+        // Tests negative denominator
+        Fraction test5 = new Fraction(3,-7);
+        System.out.println("Testing negative denominator handling: " + test5);
+        if (test5.getNumerator() != -3)
+        {
+            System.out.println("Constructor not handling negative denominator properly.");
+            errors++;
+        }
+
+        // Tests
+
 
         if (errors == 0)
         {
