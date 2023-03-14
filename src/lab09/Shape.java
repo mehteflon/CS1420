@@ -9,7 +9,12 @@ abstract public class Shape
     /**
      * Constructor - None, but you'll add one later
      */
-
+    public Shape (int x, int y, Color color)
+    {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+    }
 
     abstract public void move (int deltaX, int deltaY);
 
