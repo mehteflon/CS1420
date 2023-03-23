@@ -7,15 +7,12 @@ import java.awt.Color;
  * drawn to the screen at a particular position
  * with some size and color.
  *
- * @author Peter Jensen
+ * @author Will Graham
  * @version Spring 2023
  */
 public class Rect extends Shape
 {
     // Instance variables.
-
-    private int x, y;
-    private Color color;
     private int width;
     private int height;
 
@@ -39,9 +36,13 @@ public class Rect extends Shape
      */
     public Rect (int x, int y, int width, int height, Color color)
     {
+        super (x, y, color);
+
         this.width = width;
         this.height = height;
-        this.color = color;
+//        this.width = width;
+//        this.height = height;
+//        this.color = color;
     }
 
     /**
@@ -57,11 +58,6 @@ public class Rect extends Shape
      * @param deltaY
      *              how far to move the shape vertically
      */
-    public void move (int deltaX, int deltaY)
-    {
-        x = x + deltaX;
-        y = y + deltaY;
-    }
 
     /**
      * Draws the rectangle at it's current position and color

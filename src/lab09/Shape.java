@@ -6,6 +6,9 @@ abstract public class Shape
 {
     // Instance variables (none, but you'll add some later)
 
+    protected int x;
+    protected int y;
+    protected Color color;
     /**
      * Constructor - None, but you'll add one later
      */
@@ -16,7 +19,11 @@ abstract public class Shape
         this.color = color;
     }
 
-    abstract public void move (int deltaX, int deltaY);
+    public void move (int deltaX, int deltaY)
+    {
+        x = x + deltaX;
+        y = y + deltaY;
+    }
 
     abstract public boolean isInside (int targetX, int targetY);
 

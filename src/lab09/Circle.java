@@ -7,15 +7,12 @@ import java.awt.Color;
  * drawn to the screen at a particular position
  * with some size and color.
  *
- * @author Peter Jensen
+ * @author Will Graham
  * @version Spring 2023
  */
 public class Circle extends Shape
 {
     // Instance variables.
-
-    private int x, y;
-    private Color color;
     private int radius;
 
     /**
@@ -36,10 +33,13 @@ public class Circle extends Shape
      */
     public Circle (int x, int y, int diameter, Color color)
     {
-    	this.x = x;
-    	this.y = y;
-    	this.color = color;
-    	this.radius = diameter / 2;
+        super (x, y, color);
+
+        this.radius = diameter / 2;
+//    	this.x = x;
+//    	this.y = y;
+//    	this.color = color;
+//    	this.radius = diameter / 2;
     }
 
     /**
@@ -55,11 +55,6 @@ public class Circle extends Shape
      * @param deltaY
      *              how far to move the shape vertically
      */
-    public void move (int deltaX, int deltaY)
-    {
-    	x = x + deltaX;
-    	y = y + deltaY;
-    }
 
     /**
      * Draws the circle at it's current position and color

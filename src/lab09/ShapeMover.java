@@ -8,7 +8,7 @@ import javax.swing.*;
  * draws a few shapes for the user and allows the
  * user to drag the shapes around with the mouse.
  *
- * @author Peter Jensen
+ * @author Will Graham
  * @version Spring 2023
  */
 public class ShapeMover extends JPanel implements MouseListener,
