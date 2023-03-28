@@ -1,5 +1,6 @@
-package checkpoint0;
+package lab02;
 
+import checkpoint0.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

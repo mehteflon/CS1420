@@ -1,20 +1,27 @@
-package checkpoint0;
+/*
+Author: Will Graham
+ */
 
-import lab09.Shape;
+
+package checkpoint0;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class PathEditor extends JPanel implements Runnable, MouseListener {
+public class PathEditor extends JPanel implements Runnable, MouseListener, ActionListener {
 
     private BufferedImage background;
-    private JMenuItem menuItem1;
-    private JMenuItem menuItem2;
+    private JMenuItem menuItemLoad;
+    private JMenuItem menuItemSave;
+    private JMenuItem menuItemClear;
+    private Path path;
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new PathEditor());
     }
@@ -22,9 +29,11 @@ public class PathEditor extends JPanel implements Runnable, MouseListener {
     @Override
     public void run () {
 
+        path = new Path();
+
         try
         {
-            background = javax.imageio.ImageIO.read(new File("C:\\Users\\willk\\IdeaProjects\\CS1420\\src\\checkpoint0\\background.png"));
+            background = javax.imageio.ImageIO.read(new File("/Users/willgraham/IdeaProjects/CS 1420 - Spring 2023/src/checkpoint0/background.png"));
         }
         catch (IOException e)
         {
@@ -42,14 +51,22 @@ public class PathEditor extends JPanel implements Runnable, MouseListener {
         this.setMinimumSize(new Dimension(600, 600));
         this.setPreferredSize(new Dimension(600, 600));
 
+        // Create menu
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");
-        menuItem1 = new JMenuItem("Menu Item 1");
-        menuItem2 = new JMenuItem("Menu Item 2");
-        menu.add(menuItem1);
-        menu.add(menuItem2);
+        menuItemLoad = new JMenuItem("Load");
+        menuItemSave = new JMenuItem("Save");
+        menuItemClear = new JMenuItem("Clear");
+        menu.add(menuItemLoad);
+        menu.add(menuItemSave);
+        menu.add(menuItemClear);
         menuBar.add(menu);
         frame.setJMenuBar(menuBar);
+
+        // Listen to the JMenuItems
+        menuItemLoad.addActionListener(this);
+        menuItemSave.addActionListener(this);
+        menuItemClear.addActionListener(this);
 
         this.addMouseListener(this);
 
@@ -58,15 +75,15 @@ public class PathEditor extends JPanel implements Runnable, MouseListener {
         frame.setVisible(true);
     }
 
-    public void paint (Graphics g)
-    {
+    public void paint(Graphics g) {
+        super.paint(g);
+
         if (background != null) {
             g.drawImage(background, 0, 0, null);
         }
 
-        g.setColor(new Color (0.8f, 0.8f, 1.0f));
-        g.drawRect(200, 200, 85, 85);
-        g.fillRect(200, 200, 85, 85);
+        // Draw the path
+        path.draw(g);
     }
 
     @Override
@@ -82,6 +99,10 @@ public class PathEditor extends JPanel implements Runnable, MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         System.out.println("Mouse released at (" + e.getX() + ", " + e.getY() + ")");
+
+        Point point = new Point(e.getX(), e.getY());
+        path.add(point);
+        repaint();
     }
 
     @Override
@@ -92,5 +113,35 @@ public class PathEditor extends JPanel implements Runnable, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == menuItemLoad) {
+            // Load path using a FileChooser
+            JFileChooser fileChooser = new JFileChooser();
+            int returnVal = fileChooser.showOpenDialog(this);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                path.load(file);
+                repaint(); // Repaint after loading path
+            }
+        } else if (e.getSource() == menuItemSave) {
+            // Save the path using a FileChooser
+            JFileChooser fileChooser = new JFileChooser();
+            int returnVal = fileChooser.showSaveDialog(this);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                path.save(file);
+            }
+        } else if (e.getSource() == menuItemClear) {
+            // Clear the path and repaint
+            path.clear();
+            repaint();
+        } else {
+            System.out.println("Unknown menu item clicked: " + e.getActionCommand());
+        }
     }
 }
